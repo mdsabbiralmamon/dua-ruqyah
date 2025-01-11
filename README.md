@@ -36,6 +36,7 @@ NEXTAUTH_URL=http://localhost:3000(Default) or Use_Your_Prefered
 
 ## Folder Structure
 
+```bash
 /dua-rukaiya
 ├── /public
 │   └──             
@@ -56,3 +57,4 @@ NEXTAUTH_URL=http://localhost:3000(Default) or Use_Your_Prefered
 ├── .gitignore                 # Files to ignore in Git
 ├── package.json               # Project dependencies and scripts
 └── README.md                  # Project documentation
+```
