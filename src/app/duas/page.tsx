@@ -1,3 +1,4 @@
+import Categories from "@/components/DuaPage/Categories/Categories";
 import NavbarMain from "@/components/shared/NavbarMain/NavbarMain";
 import RightNavbar from "@/components/shared/RightNavbar/RightNavbar";
 import Topnavbar from "@/components/shared/TopNavbar/Topnavbar";
@@ -10,8 +11,9 @@ const page = () => {
         <NavbarMain />
         <div className="w-full">
           <Topnavbar />
-          <div className="flex justify-end my-4">
-          <RightNavbar />
+          <div className="flex justify-between my-4">
+            <Categories />
+            <RightNavbar />
           </div>
         </div>
       </div>
