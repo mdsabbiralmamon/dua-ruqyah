@@ -1,12 +1,16 @@
-import NavbarMain from '@/components/shared/NavbarMain/NavbarMain';
-import React from 'react';
+import NavbarMain from "@/components/shared/NavbarMain/NavbarMain";
+import Topnavbar from "@/components/shared/TopNavbar/Topnavbar";
+import React from "react";
 
 const page = () => {
-    return (
-        <div>
-            <NavbarMain />
-        </div>
-    );
+  return (
+    <div>
+      <div className="flex gap-8">
+        <NavbarMain />
+        <Topnavbar />
+      </div>
+    </div>
+  );
 };
 
 export default page;
