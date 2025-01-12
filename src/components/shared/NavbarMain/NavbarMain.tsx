@@ -3,13 +3,13 @@ import React from "react";
 
 const NavbarMain = () => {
   return (
-    <div className="flex flex-col justify-between items-center w-[100px] h-[927px]">
+    <div className="flex flex-col justify-between items-center w-[100px] py-10 px-4 bg-white rounded-3xl h-[calc(100vh-80px)]">
       {/* Logo */}
       <div className="bg-[#1FA45B] w-14 h-14 rounded-lg flex items-center justify-center">
         <Image src="/images/logo.png" alt="logo" width={50} height={50} />
       </div>
       {/* Main Nav Bar Content */}
-      <div>
+      <div className="flex flex-col gap-7">
         {/* Home */}
         <div className="bg-[#E8F0F5] w-9 h-9 rounded-full flex items-center justify-center">
           <svg
@@ -123,7 +123,7 @@ const NavbarMain = () => {
               clipRule="evenodd"
               d="M5.59815 5.33539C4.64008 6.29348 4.64008 7.83547 4.64008 10.9195V19.5886C4.64008 20.8357 5.97976 21.624 7.06991 21.0184L11.2057 18.7207C11.6997 18.4462 12.3003 18.4462 12.7943 18.7207L16.9301 21.0184C18.0203 21.624 19.3599 20.8357 19.3599 19.5886V10.9195C19.3599 7.83547 19.3599 6.29348 18.4018 5.33539C17.4438 4.37732 15.9017 4.37732 12.8178 4.37732H11.1822C8.09823 4.37732 6.55623 4.37732 5.59815 5.33539Z"
               stroke="#868686"
-              stroke-width="1.75"
+              strokeWidth="1.75"
             />
           </svg>
         </div>
