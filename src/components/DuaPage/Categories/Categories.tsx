@@ -4,15 +4,33 @@ import axios from 'axios';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
+// Define interfaces for Category and SubCategory
+interface SubCategory {
+  id: number;
+  subcat_name_en: string;
+  cat_id: number;
+  no_of_dua: number;
+}
+
+interface Category {
+  id: number;
+  cat_id: number;
+  cat_name_en: string;
+  cat_icon: string;
+  no_of_dua: number;
+  no_of_subcat: number;
+  subcategories: SubCategory[];
+}
+
 const DuaCategories = () => {
-  const [expandedCategory, setExpandedCategory] = useState(null);
-  const [categoriesWithSubcategories, setCategoriesWithSubcategories] = useState([]);
+  const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
+  const [categoriesWithSubcategories, setCategoriesWithSubcategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    // Fetch data from api/all-data
+    // Fetch data from /api/all-data
     axios.get('/api/all-data')
       .then((response) => {
-        const { category, sub_category } = response.data;
+        const { category, sub_category }: { category: Category[]; sub_category: SubCategory[] } = response.data;
 
         // Map subcategories to their parent categories
         const categories = category.map((cat) => ({
@@ -27,7 +45,7 @@ const DuaCategories = () => {
       });
   }, []);
 
-  const toggleCategory = (categoryId) => {
+  const toggleCategory = (categoryId: number) => {
     setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
   };
 
@@ -36,7 +54,7 @@ const DuaCategories = () => {
       <div className="bg-emerald-500 p-4 rounded-t-xl">
         <h2 className="text-white text-lg font-medium">Categories</h2>
       </div>
-      
+
       <div className="bg-white flex-1 flex flex-col overflow-hidden">
         <div className="p-4">
           <div className="relative">
@@ -85,7 +103,7 @@ const DuaCategories = () => {
               {expandedCategory === category.cat_id && (
                 <div className="border-t bg-gray-50">
                   {category.subcategories.map((subcat) => (
-                    <div 
+                    <div
                       key={subcat.id}
                       className="flex items-center gap-2 p-3 border-b last:border-b-0 hover:bg-gray-100 transition-colors cursor-pointer"
                     >
