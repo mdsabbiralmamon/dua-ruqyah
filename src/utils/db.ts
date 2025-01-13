@@ -17,8 +17,17 @@ export const getTableNames = () => {
   return stmt.all() as { name: string }[];
 };
 
-// Optionally add a function to query with parameters
+// Function to query data with parameters
 export const getDataWithParams = (query: string, params: unknown[]): unknown[] => {
-    const stmt = db.prepare(query);
-    return stmt.all(params);
-  };
+  const stmt = db.prepare(query);
+  return stmt.all(params);
+};
+
+// Function to get all Duas under a specific subcategory
+export const getDuasBySubcategory = (subcatId: number): unknown[] => {
+  const query = `
+    SELECT * FROM dua 
+    WHERE subcat_id = ?`;
+  const stmt = db.prepare(query);
+  return stmt.all(subcatId);
+};
