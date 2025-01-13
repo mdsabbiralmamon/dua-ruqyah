@@ -3,14 +3,7 @@
 import axios from 'axios';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-
-// Define interfaces for Category and SubCategory
-interface SubCategory {
-  id: number;
-  subcat_name_en: string;
-  cat_id: number;
-  no_of_dua: number;
-}
+import { SubCategory } from "@/types/types";
 
 interface Category {
   id: number;
