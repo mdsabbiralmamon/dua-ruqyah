@@ -1,89 +1,38 @@
 'use client';
 
+import axios from 'axios';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DuaCategories = () => {
-  const [expandedCategory, setExpandedCategory] = useState(1);
+  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [categoriesWithSubcategories, setCategoriesWithSubcategories] = useState([]);
 
-  const categories = [
-    {
-      id: 1,
-      title: "Dua's Importance",
-      subcategories: [
-        {
-          id: 1,
-          title: "The servant is dependent on his Lord",
-          duaCount: 3
-        },
-        {
-          id: 2,
-          title: "The most important thing to ask Allah for",
-          duaCount: 4
-        },
-        {
-          id: 3,
-          title: "Ask for paradise & protection from fire",
-          duaCount: 2
-        },
-        {
-          id: 4,
-          title: "Dua to remain steadfast on the religion",
-          duaCount: 3
-        },
-        {
-          id: 5,
-          title: "Dua of good outcome in all deeds",
-          duaCount: 3
-        },
-        {
-          id: 6,
-          title: "Seeking whatever good Allah can bestow",
-          duaCount: 3
-        },
-        {
-          id: 7,
-          title: "Shelter from horror, misery, evil consequences and rejoicing of the enemy",
-          duaCount: 3
-        }
-      ],
-      totalDuas: 21,
-      icon: "🤲"
-    },
-    {
-      id: 2,
-      title: "Dua's Excellence",
-      subcategories: [
-        {
-          id: 1,
-          title: "Excellence of Dua",
-          duaCount: 15
-        }
-      ],
-      totalDuas: 15,
-      icon: "⭐"
-    },
-    {
-      id: 3,
-      title: "Time of Dua",
-      subcategories: [
-        {
-          id: 1,
-          title: "Best Times for Dua",
-          duaCount: 30
-        }
-      ],
-      totalDuas: 30,
-      icon: "🌙"
-    }
-  ];
+  useEffect(() => {
+    // Fetch data from api/all-data
+    axios.get('/api/all-data')
+      .then((response) => {
+        const { category, sub_category } = response.data;
+
+        // Map subcategories to their parent categories
+        const categories = category.map((cat) => ({
+          ...cat,
+          subcategories: sub_category.filter((sub) => sub.cat_id === cat.cat_id),
+        }));
+
+        setCategoriesWithSubcategories(categories);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const toggleCategory = (categoryId) => {
     setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
   };
 
   return (
-    <div className="w-[400px] h-[calc(100vh-180px)] flex flex-col rounded-xl">
+    <div className="w-[450px] h-[calc(100vh-180px)] flex flex-col rounded-xl shadow-xl overflow-hidden">
       <div className="bg-emerald-500 p-4 rounded-t-xl">
         <h2 className="text-white text-lg font-medium">Categories</h2>
       </div>
@@ -101,27 +50,31 @@ const DuaCategories = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4 rounded-xl">
-          {categories.map((category) => (
+          {categoriesWithSubcategories.map((category) => (
             <div key={category.id} className="border rounded-lg overflow-hidden">
               <button
-                onClick={() => toggleCategory(category.id)}
+                onClick={() => toggleCategory(category.cat_id)}
                 className="w-full p-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">{category.icon}</span>
+                  <img
+                    src={`/images/${category.cat_icon}.svg`}
+                    alt={category.cat_name_en}
+                    className="w-8 h-8"
+                  />
                   <div className="text-left">
-                    <h3 className="font-medium">{category.title}</h3>
+                    <h3 className="font-medium">{category.cat_name_en}</h3>
                     <p className="text-sm text-gray-500">
-                      Subcategory: {category.subcategories.length}
+                      Subcategories: {category.no_of_subcat}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right">
-                    <span className="font-medium">{category.totalDuas}</span>
+                    <span className="font-medium">{category.no_of_dua}</span>
                     <p className="text-sm text-gray-500">Duas</p>
                   </div>
-                  {expandedCategory === category.id ? (
+                  {expandedCategory === category.cat_id ? (
                     <ChevronUp className="w-5 h-5 text-gray-400" />
                   ) : (
                     <ChevronDown className="w-5 h-5 text-gray-400" />
@@ -129,16 +82,20 @@ const DuaCategories = () => {
                 </div>
               </button>
 
-              {expandedCategory === category.id && (
+              {expandedCategory === category.cat_id && (
                 <div className="border-t bg-gray-50">
-                  {category.subcategories.map((subcategory) => (
+                  {category.subcategories.map((subcat) => (
                     <div 
-                      key={subcategory.id}
+                      key={subcat.id}
                       className="flex items-center gap-2 p-3 border-b last:border-b-0 hover:bg-gray-100 transition-colors cursor-pointer"
                     >
                       <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                      <span className="text-sm text-gray-700 flex-1">{subcategory.title}</span>
-                      <span className="text-sm text-gray-500">{subcategory.duaCount} Duas</span>
+                      <span className="text-sm text-gray-700 flex-1">
+                        {subcat.subcat_name_en}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {subcat.no_of_dua} Duas
+                      </span>
                     </div>
                   ))}
                 </div>
