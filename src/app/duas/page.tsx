@@ -6,9 +6,10 @@ import NavbarMain from "@/components/shared/NavbarMain/NavbarMain";
 import RightNavbar from "@/components/shared/RightNavbar/RightNavbar";
 import Topnavbar from "@/components/shared/TopNavbar/Topnavbar";
 import React, { useState } from "react";
+import { SubCategory } from "@/types/types";
 
 const Page = () => {
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<SubCategory | null>(null);
 
   return (
     <div className="">
