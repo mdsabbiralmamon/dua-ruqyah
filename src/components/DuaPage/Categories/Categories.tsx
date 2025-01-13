@@ -22,13 +22,18 @@ interface Category {
   subcategories: SubCategory[];
 }
 
-const DuaCategories = () => {
+interface CategoriesProps {
+  onSubcategoryClick: (subcategory: SubCategory) => void;
+}
+
+const DuaCategories: React.FC<CategoriesProps> = ({ onSubcategoryClick }) => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [categoriesWithSubcategories, setCategoriesWithSubcategories] = useState<Category[]>([]);
 
   useEffect(() => {
     // Fetch data from /api/all-data
-    axios.get('/api/all-data')
+    axios
+      .get('/api/all-data')
       .then((response) => {
         const { category, sub_category }: { category: Category[]; sub_category: SubCategory[] } = response.data;
 
@@ -105,6 +110,7 @@ const DuaCategories = () => {
                   {category.subcategories.map((subcat) => (
                     <div
                       key={subcat.id}
+                      onClick={() => onSubcategoryClick(subcat)}
                       className="flex items-center gap-2 p-3 border-b last:border-b-0 hover:bg-gray-100 transition-colors cursor-pointer"
                     >
                       <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
