@@ -32,7 +32,7 @@ const DuaCategories = () => {
   };
 
   return (
-    <div className="w-[450px] h-[calc(100vh-180px)] flex flex-col rounded-xl shadow-xl overflow-hidden">
+    <div className="w-[500px] h-[calc(100vh-180px)] flex flex-col rounded-xl shadow-xl overflow-hidden">
       <div className="bg-emerald-500 p-4 rounded-t-xl">
         <h2 className="text-white text-lg font-medium">Categories</h2>
       </div>
