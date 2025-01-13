@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDuasBySubcategory } from '@/utils/db';
 
-export async function GET(req: NextRequest, { params }: { params: { subcat_id: string } }) {
+export async function GET(req: NextRequest, props: { params: Promise<{ subcat_id: string }> }) {
+  const params = await props.params;
   const { subcat_id } = params;
 
   if (!subcat_id || isNaN(Number(subcat_id))) {
